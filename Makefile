@@ -12,6 +12,9 @@ SRC = 	./src/utils/ft_atol.c \
 		./src/main.c \
 		./src/init.c \
 		./src/routine.c \
+		./src/destroy.c \
+		./src/simulation.c \
+		./src/monitor.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -20,16 +23,19 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "Compiling source code..."
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "Ready."
+	@echo "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 	
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm philo
+	@rm -f philo
 
 re: fclean all
 
