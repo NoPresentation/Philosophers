@@ -46,6 +46,9 @@ void	    ft_putstr_fd(char *s, int fd);
 int         ft_isnumber(char *s);
 ll          ft_atol(const char *nptr);
 long long   get_time_ms();
+void ft_usleep(long duration, t_table *table);
+int end_simulation(t_table *table);
+
 
 // initialization functions
 int         init_forks(t_table *table);

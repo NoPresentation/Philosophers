@@ -18,6 +18,6 @@ int    simulation(int argc, ll *args)
         return (1);
     }
     monitor(table);
-    clean_up(table);
+    // clean_up(table);
     return (0);
 }

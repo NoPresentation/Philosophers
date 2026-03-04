@@ -9,6 +9,7 @@ SRC = 	./src/utils/ft_atol.c \
 		./src/utils/ft_isnumber.c \
 		./src/utils/ft_putstr_fd.c \
 		./src/utils/get_time_ms.c \
+		./src/utils/ft_usleep.c \
 		./src/main.c \
 		./src/init.c \
 		./src/routine.c \
@@ -27,6 +28,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "Ready."
 	@echo "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
+	@rm -f $(OBJ)
 	
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

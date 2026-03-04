@@ -22,7 +22,7 @@ static int check_all_full(t_table *table)
         pthread_mutex_lock(&table->simulation_lock);
         table->simulation = 0;
         pthread_mutex_unlock(&table->simulation_lock);
-        printf("Hmmm... all full\n");
+        clean_up(table);
         return (1);
     }
     return (0);
@@ -30,16 +30,22 @@ static int check_all_full(t_table *table)
 
 static int check_dead(t_philo *philo)
 {
+    ll  death_time;
+    int dead_id;
+
     pthread_mutex_lock(&philo->last_meal_lock);
     if (get_time_ms() - philo->last_meal > philo->table->to_die)
     {
         pthread_mutex_unlock(&philo->last_meal_lock);
-        pthread_mutex_lock(&philo->table->print_lock);
-        printf("%lld\t%d died\n", get_time_ms() - philo->table->start_time, philo->id);
-        pthread_mutex_unlock(&philo->table->print_lock);
         pthread_mutex_lock(&philo->table->simulation_lock);
         philo->table->simulation = 0;
         pthread_mutex_unlock(&philo->table->simulation_lock);
+        death_time = get_time_ms() - philo->table->start_time;
+        dead_id = philo->id;
+        clean_up(philo->table);
+        pthread_mutex_lock(&philo->table->print_lock);
+        printf("%lld\t%d died\n", death_time, dead_id);
+        pthread_mutex_unlock(&philo->table->print_lock);
         return 1;
     }
     pthread_mutex_unlock(&philo->last_meal_lock);
