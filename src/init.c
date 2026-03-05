@@ -42,9 +42,9 @@ t_table *init_table(int argc, ll *args)
     table->to_eat = args[2];
     table->to_sleep = args[3];
     if (argc == 6)
-        table->full = args[4];
+        table->must_eat = args[4];
     else
-        table->full = -1;
+        table->must_eat = -1;
     table->simulation = 1;
     return (table);
 }

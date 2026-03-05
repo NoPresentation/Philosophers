@@ -2,6 +2,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <sys/time.h>
 
 typedef long long ll;
@@ -18,8 +19,7 @@ typedef struct s_table
     ll to_eat;
     ll to_sleep;
     ll start_time;
-    int full;
-    int full_philos;;
+    int must_eat;
     int simulation;
     pthread_mutex_t simulation_lock;
     pthread_mutex_t print_lock;
@@ -35,6 +35,7 @@ typedef struct s_philo
     pthread_mutex_t meals_lock;
     pthread_mutex_t last_meal_lock;
     long long last_meal;
+    long long born_time;
     pthread_t thread;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
@@ -46,8 +47,9 @@ void	    ft_putstr_fd(char *s, int fd);
 int         ft_isnumber(char *s);
 ll          ft_atol(const char *nptr);
 long long   get_time_ms();
-void ft_usleep(long duration, t_table *table);
-int end_simulation(t_table *table);
+void        ft_usleep(long duration, t_table *table);
+bool        end_simulation(t_table *table);
+void        print_action(t_philo *philo, char *state);
 
 
 // initialization functions
@@ -58,7 +60,7 @@ int         init_simulation(t_table *table);
 
 // simulation
 void        monitor(t_table *table);
-void        *routine(void *arg);
+void        *routine(void *p);
 int         simulation(int argc, ll *args);
 
 // clean up functions
