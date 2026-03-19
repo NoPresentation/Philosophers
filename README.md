@@ -46,18 +46,15 @@ Because threads share the same memory and resources, they may try to access them
 This leads to race conditions and resource conflicts, which will cause a lot of issues and data corruption.
 
 To solve this, we use mutexes (locks):
-```
--> A thread locks a resource before using it
--> Other threads must wait until it is unlocked
--> Once finished, the thread releases the resource
-```
+- A thread locks a resource before using it
+- Other threads must wait until it is unlocked
+- Once finished, the thread releases the resource
 
 However, simply locking resources is not enough. We must also ensure that:
-```
 1. Threads release resources properly
 2. No thread holds a resource for too long
 3. The system does not enter a deadlock
-```
+
 ### Mapping the Problem
 In this simulation:
 ```
@@ -73,21 +70,20 @@ Each philosopher:
 5. Thinks
 6. Repeats
 
-### Constraints
+### Constraints & Arguments
 Each philosopher operates under strict timing rules:
-```
-time_to_eat: duration of eating
-time_to_sleep: duration of sleeping
-time_to_die: maximum time without eating before death
-```
+- `time_to_eat`: duration of eating
+- `time_to_sleep`: duration of sleeping
+- `time_to_die`: maximum time without eating before death
+- `limit` (optional): If all philosophers reach meal limit, the simulation stops.
+
 A philosopher must eat before time_to_die expires, or they will starve and the simulation will stop.
 
 ### Goal
-- The objective is to design a system where:
-- No deadlocks occur
+The objective is to design a system where:
 - No philosopher starves
+- No deadlocks occur
 - Resource access is properly synchronized
-- The simulation behaves predictably under concurrency
 
 We use the `pthread.h` library to create threads and mutexes and destry them.
 ## Instructions
