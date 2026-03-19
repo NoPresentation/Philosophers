@@ -28,6 +28,7 @@ void init_philo(t_table *table, int i)
     table->philo[i].right_fork = &table->forks[(i + 1) % table->N];
     table->philo[i].left_fork = &table->forks[i];
     table->philo[i].last_meal = get_time_ms();
+    table->philo[i].born_time = get_time_ms();
 }
 
 t_table *init_table(int argc, ll *args)
