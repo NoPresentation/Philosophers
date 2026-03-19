@@ -6,7 +6,7 @@ This project explores that idea through the [The Dining Philosophers problem](ht
 
 ### The Problem
 ![Philosophers](./assets/philosophers.png)
-```
+
 - One or more philosophers sit at a round table.
   There is a large bowl of spaghetti in the middle of the table.
 
@@ -33,7 +33,7 @@ This project explores that idea through the [The Dining Philosophers problem](ht
 - Philosophers are unaware of the state of others.
 
 - Needless to say, philosophers should avoid dying.
-```
+
 ### Introduction
 A [process](https://www.geeksforgeeks.org/operating-systems/process-in-operating-system/) is a program loaded into memory for execution.
 Each process can contain multiple [threads](https://www.geeksforgeeks.org/operating-systems/thread-in-operating-system/), threads are the smallest units of execution handled by the CPU.
@@ -118,7 +118,6 @@ make
 ./philo 5 800 200 200
 ```
 -> One of the philosophers will not get his forks on time, he will die. The simulation stops.
-
 ## Resources
 ### Concepts
 [The dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
