@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:16:54 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/05 18:11:28 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/03/24 20:36:57 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ void	ft_putstr_fd(char *s, int fd)
 	write(fd, s, ft_strlen(s));
 }
 
-void    print_action(t_philo *philo, char *state)
+void	print_action(t_philo *philo, char *state)
 {
 	if (!end_simulation(philo->table))
 	{
 		pthread_mutex_lock(&philo->table->print_lock);
-		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id, state);
+		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
+			state);
 		pthread_mutex_unlock(&philo->table->print_lock);
 	}
 }

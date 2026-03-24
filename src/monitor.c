@@ -1,56 +1,69 @@
-# include "../inc/philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/24 19:05:28 by anashwan          #+#    #+#             */
+/*   Updated: 2026/03/24 19:14:20 by anashwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-bool check_dead(t_philo *philo)
+#include "../inc/philo.h"
+
+bool	check_dead(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->meals_lock);
-    if (get_time_ms() - philo->last_meal >= philo->table->to_die)
-    {
-        pthread_mutex_lock(&philo->table->simulation_lock);
-        philo->table->simulation = 0;
-        pthread_mutex_unlock(&philo->table->simulation_lock);
-        pthread_mutex_unlock(&philo->meals_lock);
-		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id, "died");
-        return (true);
-    } 
-    pthread_mutex_unlock(&philo->meals_lock);
-    return (false);
+	pthread_mutex_lock(&philo->meals_lock);
+	if (get_time_ms() - philo->last_meal >= philo->table->to_die)
+	{
+		pthread_mutex_lock(&philo->table->simulation_lock);
+		philo->table->simulation = 0;
+		pthread_mutex_unlock(&philo->table->simulation_lock);
+		pthread_mutex_unlock(&philo->meals_lock);
+		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
+			"died");
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->meals_lock);
+	return (false);
 }
 
-bool    check_full(t_philo *philo)
+bool	check_full(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->meals_lock);
-    if (philo->meals >= philo->table->must_eat)
-    {
-        pthread_mutex_unlock(&philo->meals_lock);
-        return (1);
-    }
-    pthread_mutex_unlock(&philo->meals_lock);
-    return (0);
+	pthread_mutex_lock(&philo->meals_lock);
+	if (philo->meals >= philo->table->must_eat)
+	{
+		pthread_mutex_unlock(&philo->meals_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->meals_lock);
+	return (0);
 }
 
-void    monitor(t_table *table)
+void	monitor(t_table *table)
 {
-    int i;
-    int full_philos;
+	int	i;
+	int	full_philos;
 
-    while (true)
-    {
-        i = 0;
-        full_philos = 0;
-        while (i < table->N)
-        {
-            if (check_dead(&table->philo[i]))
-                return ;
-            if (table->must_eat != -1 && check_full(&table->philo[i]))
-                full_philos++;
-            i++;
-        }
-        if (table->must_eat != - 1 && full_philos >= table->N)
-        {
-            pthread_mutex_lock(&table->simulation_lock);
-            table->simulation = 0;
-            pthread_mutex_unlock(&table->simulation_lock);
-            return ;
-        }
-    }
+	while (true)
+	{
+		i = 0;
+		full_philos = 0;
+		while (i < table->total)
+		{
+			if (check_dead(&table->philo[i]))
+				return ;
+			if (table->must_eat != -1 && check_full(&table->philo[i]))
+				full_philos++;
+			i++;
+		}
+		if (table->must_eat != -1 && full_philos >= table->total)
+		{
+			pthread_mutex_lock(&table->simulation_lock);
+			table->simulation = 0;
+			pthread_mutex_unlock(&table->simulation_lock);
+			return ;
+		}
+	}
 }

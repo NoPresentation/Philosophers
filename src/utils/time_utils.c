@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 12:21:27 by anashwan          #+#    #+#             */
-/*   Updated: 2025/09/11 13:25:42 by anashwan         ###   ########.fr       */
+/*   Created: 2026/03/24 19:06:02 by anashwan          #+#    #+#             */
+/*   Updated: 2026/03/24 20:37:23 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-ll	ft_atol(const char *nptr)
+long long	get_time_ms(void)
 {
-	int	i;
-	int	sign;
-	ll	number;
+	long long		time;
+	struct timeval	tv;
 
-	i = 0;
-	sign = 1;
-	number = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
+	gettimeofday(&tv, NULL);
+	time = tv.tv_sec * 1000LL + tv.tv_usec / 1000;
+	return (time);
+}
+
+void	ft_usleep(long duration, t_table *table)
+{
+	long	start;
+
+	start = get_time_ms();
+	while (!end_simulation(table))
 	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
+		if (get_time_ms() - start >= duration)
+			break ;
+		usleep(300);
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		number = (number * 10) + (nptr[i] - '0');
-		i++;
-	}
-	number *= sign;
-	return (number);
 }
