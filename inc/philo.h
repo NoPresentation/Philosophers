@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 20:34:41 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:57:40 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
-
-#define BLUE "\033[36m"
-#define RESET "\033[0m"
 
 typedef struct s_table
 {
@@ -43,7 +40,6 @@ typedef struct s_philo
 	int					id;
 	int					meals;
 	pthread_mutex_t		meals_lock;
-	pthread_mutex_t		last_meal_lock;
 	long long			last_meal;
 	long long			born_time;
 	pthread_t			thread;

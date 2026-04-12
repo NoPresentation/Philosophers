@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:35 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 20:17:46 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:36:13 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ long long	*get_args(int argc, char **argv)
 		i++;
 	}
 	args = malloc(sizeof(long long) * argc - 1);
+	if (!args)
+		return (NULL);
 	i = 0;
 	while (i < argc && argv[i + 1])
 	{

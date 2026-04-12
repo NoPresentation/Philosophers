@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc 
 
-CFLAGS = -Wall -Werror -Wextra -pthread -g
+CFLAGS = -Wall -Werror -Wextra -pthread 
 
 SRC = 	./src/utils/ft_putstr_fd.c \
 		./src/utils/num_utils.c \
@@ -24,7 +24,6 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "Ready."
 	@echo "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
-	@rm -f $(OBJ)
 	
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

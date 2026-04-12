@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:33 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 20:35:35 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:58:15 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ static int	init_philo_locks(t_table *table)
 	{
 		if (pthread_mutex_init(&table->philo[i].meals_lock, NULL) != 0)
 		{
-			destroy_locks(table, i);
-			return (1);
-		}
-		if (pthread_mutex_init(&table->philo[i].last_meal_lock, NULL) != 0)
-		{
-			pthread_mutex_destroy(&table->philo[i].meals_lock);
 			destroy_locks(table, i);
 			return (1);
 		}

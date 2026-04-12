@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:28 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 19:14:20 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:56:00 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ bool	check_dead(t_philo *philo)
 		philo->table->simulation = 0;
 		pthread_mutex_unlock(&philo->table->simulation_lock);
 		pthread_mutex_unlock(&philo->meals_lock);
+		pthread_mutex_lock(&philo->table->print_lock);
 		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
 			"died");
+		pthread_mutex_unlock(&philo->table->print_lock);
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->meals_lock);
