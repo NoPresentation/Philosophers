@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:33 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/12 18:58:15 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/04/14 02:22:37 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static int	init_philo_locks(t_table *table)
 
 int	init_locks(t_table *table)
 {
-	int	i;
-
 	if (pthread_mutex_init(&table->simulation_lock, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
@@ -90,7 +88,6 @@ int	init_locks(t_table *table)
 		pthread_mutex_destroy(&table->simulation_lock);
 		return (1);
 	}
-	i = 0;
 	if (init_philo_locks(table) != 0)
 		return (1);
 	return (0);
