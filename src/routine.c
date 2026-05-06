@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:21 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/14 02:24:43 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:25:36 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*routine(void *p)
 	philo->born_time = get_time_ms();
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->meals_lock);
-	while (true)
+	while (1)
 	{
 		if (end_simulation(philo->table))
 			return (NULL);

@@ -6,12 +6,11 @@
 /*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/12 18:57:40 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:24:07 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
