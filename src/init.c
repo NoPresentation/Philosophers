@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:33 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/14 02:22:37 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/06 13:55:20 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init_philo(t_table *table, int i)
 	table->philo[i].left_fork = &table->forks[i];
 	table->philo[i].last_meal = get_time_ms();
 	table->philo[i].born_time = get_time_ms();
+	table->philo[i].meals = 0;
 }
 
 t_table	*init_table(int argc, long long *args)
