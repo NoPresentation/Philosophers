@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   states.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/14 04:37:18 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:10:45 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void	thinking(t_philo *philo)
 	print_action(philo, "is thinking");
 	think_time = philo->table->to_die - philo->table->to_eat
 		- philo->table->to_sleep;
-	if (think_time < 0)
-		think_time = think_time * -1;
-	ft_usleep(think_time / 2, philo->table);
+	if (think_time <= 0)
+		think_time = 1;
+	else
+		think_time = think_time / 2;
+	ft_usleep(think_time, philo->table);
 }
