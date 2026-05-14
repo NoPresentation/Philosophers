@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/06 17:24:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:11:46 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,17 @@ typedef struct s_philo
 	t_table				*table;
 }						t_philo;
 
+typedef enum e_code
+{
+	SUCCESS,
+	FAILURE	
+} t_code;
+
 void					ft_putstr_fd(char *s, int fd);
 int						ft_isnumber(char *s);
 long long				ft_atol(const char *nptr);
 long long				get_time_ms(void);
-void					ft_usleep(long duration, t_table *table);
+int						ft_usleep(long duration, t_table *table);
 int						end_simulation(t_table *table);
 void					print_action(t_philo *philo, char *state);
 
@@ -65,7 +71,7 @@ int						init_simulation(t_table *table);
 // simulation
 void					monitor(t_table *table);
 void					*routine(void *p);
-void					eating(t_philo *philo);
+int						eating(t_philo *philo);
 void					sleeping(t_philo *philo);
 void					thinking(t_philo *philo);
 int						simulation(int argc, long long *args);

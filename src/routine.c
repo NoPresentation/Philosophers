@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:21 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/14 19:02:35 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/14 20:22:48 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	end_simulation(t_table *table)
 	if (!table->simulation)
 	{
 		pthread_mutex_unlock(&table->simulation_lock);
-		return (1);
+		return (FAILURE);
 	}
 	pthread_mutex_unlock(&table->simulation_lock);
-	return (0);
+	return (SUCCESS);
 }
 
 int	single_philo(t_philo *philo)
@@ -30,9 +30,9 @@ int	single_philo(t_philo *philo)
 	{
 		print_action(philo, "has taken a fork");
 		ft_usleep(philo->table->to_die, philo->table);
-		return (1);
+		return (FAILURE);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 void	*routine(void *p)
