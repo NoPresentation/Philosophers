@@ -6,11 +6,11 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:40 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 14:38:17 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 
 void stop_simulation(t_table *table)

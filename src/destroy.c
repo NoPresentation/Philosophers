@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:30 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/12 18:58:03 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 void	destroy_forks(t_table *table, int forks)
 {

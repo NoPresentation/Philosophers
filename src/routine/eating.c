@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   states.c                                           :+:      :+:    :+:   */
+/*   eating.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 13:47:00 by anashwan         ###   ########.fr       */
-/*                                                                            */
+/*   Created: 2026/05/15 15:30:23 by anashwan          #+#    #+#             */
+/*   Updated: 2026/05/15 15:30:37 by anashwan         ###   ########.fr       */
+/*                                            h                                */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+# include "philo.h"
 
 static void	release_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
 {
@@ -87,23 +87,5 @@ int	eating(t_philo *philo)
 		return (FAILURE);
 	}
 	release_forks(first_fork, second_fork);
-	return (OK);
-}
-
-int	sleeping(t_philo *philo)
-{
-	if (check_simulation_end(philo->table))
-		return (FAILURE);
-	print_action(philo, "is sleeping");
-	smart_sleep(philo->table->to_sleep, philo->table);
-	return (OK);
-}
-
-int thinking(t_philo *philo)
-{
-    if (check_simulation_end(philo->table))
-		return (FAILURE);
-	print_action(philo, "is thinking");
-	usleep(500);
 	return (OK);
 }

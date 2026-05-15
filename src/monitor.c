@@ -10,7 +10,7 @@
 	/*                                                                            */
 	/* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 static void	announce_death(t_philo *philo)
 {
