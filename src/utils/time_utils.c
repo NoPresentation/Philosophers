@@ -6,11 +6,11 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:06:02 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:00:38 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 17:19:54 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "philo.h"
 
 long long	get_time_ms(void)
 {

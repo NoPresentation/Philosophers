@@ -6,11 +6,11 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:16:54 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 14:09:05 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 17:19:48 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "philo.h"
 
 static size_t	ft_strlen(const char *s)
 {

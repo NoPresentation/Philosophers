@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 int	sleeping(t_philo *philo)
 {
@@ -20,4 +20,3 @@ int	sleeping(t_philo *philo)
 	smart_sleep(philo->table->to_sleep, philo->table);
 	return (OK);
 }
-

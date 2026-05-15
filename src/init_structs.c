@@ -46,7 +46,7 @@ void	init_philo(t_table *table, int i)
 t_table	*init_table(int argc, long long *args)
 {
 	t_table	*table;
-	
+
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);

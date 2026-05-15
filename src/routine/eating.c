@@ -5,39 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/15 15:30:23 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:30:37 by anashwan         ###   ########.fr       */
-/*                                            h                                */
+/*   Created: 2026/05/15 17:18:40 by anashwan          #+#    #+#             */
+/*   Updated: 2026/05/15 17:18:43 by anashwan         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
-static void	release_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
+static void	release_forks(pthread_mutex_t *first, pthread_mutex_t *second)
 {
-	pthread_mutex_unlock(second_fork);
-	pthread_mutex_unlock(first_fork);
+	pthread_mutex_unlock(second);
+	pthread_mutex_unlock(first);
 }
 
-static int	grab_forks(t_philo *philo, pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
+static int	grab_forks(t_philo *philo, pthread_mutex_t *first,
+		pthread_mutex_t *second)
 {
-	pthread_mutex_lock(first_fork);
+	pthread_mutex_lock(first);
 	if (check_simulation_end(philo->table))
 	{
-		pthread_mutex_unlock(first_fork);
+		pthread_mutex_unlock(first);
 		return (FAILURE);
 	}
 	print_action(philo, "has taken a fork");
-	pthread_mutex_lock(second_fork);
+	pthread_mutex_lock(second);
 	if (check_simulation_end(philo->table))
 	{
-		release_forks(first_fork, second_fork);
+		release_forks(first, second);
 		return (FAILURE);
 	}
 	print_action(philo, "has taken a fork");
 	return (OK);
 }
 
-static int update_meals(t_philo *philo)
+static int	update_meals(t_philo *philo)
 {
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
@@ -57,35 +58,36 @@ static int update_meals(t_philo *philo)
 	return (OK);
 }
 
-static void	set_forks(t_philo *philo, pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
+static void	set_forks(t_philo *philo, pthread_mutex_t **first,
+		pthread_mutex_t **second)
 {
 	if (philo->id % 2 == 0)
 	{
-		*first_fork = philo->right_fork;
-		*second_fork = philo->left_fork;
+		*first = philo->right_fork;
+		*second = philo->left_fork;
 	}
 	else
 	{
-		*first_fork = philo->left_fork;
-		*second_fork = philo->right_fork;
+		*first = philo->left_fork;
+		*second = philo->right_fork;
 	}
 }
 
 int	eating(t_philo *philo)
 {
-	pthread_mutex_t *first_fork;
-	pthread_mutex_t *second_fork;
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
 
-	set_forks(philo, &first_fork, &second_fork);
+	set_forks(philo, &first, &second);
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
-	if (grab_forks(philo, first_fork, second_fork) == FAILURE)
+	if (grab_forks(philo, first, second) == FAILURE)
 		return (FAILURE);
 	if (update_meals(philo) == FAILURE)
 	{
-		release_forks(first_fork, second_fork);
+		release_forks(first, second);
 		return (FAILURE);
 	}
-	release_forks(first_fork, second_fork);
+	release_forks(first, second);
 	return (OK);
 }

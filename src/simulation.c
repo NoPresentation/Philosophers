@@ -12,15 +12,14 @@
 
 #include "philo.h"
 
-
-void stop_simulation(t_table *table)
+void	stop_simulation(t_table *table)
 {
 	pthread_mutex_lock(&table->simulation_lock);
 	table->simulation = 0;
 	pthread_mutex_unlock(&table->simulation_lock);
 }
 
-static	void	thread_fail_cleanup(t_table *table, int threads)
+static void	thread_fail_cleanup(t_table *table, int threads)
 {
 	stop_simulation(table);
 	destroy_threads(table, threads);
@@ -44,7 +43,7 @@ int	init_simulation(t_table *table)
 	{
 		init_philo(table, i);
 		if (pthread_create(&table->philo[i].thread, NULL, routine,
-			 &table->philo[i]) != 0)
+				&table->philo[i]) != 0)
 		{
 			thread_fail_cleanup(table, i);
 			free(table->philo);

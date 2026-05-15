@@ -1,4 +1,16 @@
-# include "../../inc/philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/15 17:19:39 by anashwan          #+#    #+#             */
+/*   Updated: 2026/05/15 17:20:43 by anashwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
 
 static int	ft_isdigit(int c)
 {
@@ -6,24 +18,25 @@ static int	ft_isdigit(int c)
 		return (1);
 	return (0);
 }
-int ft_isnumber(char *s)
-{
-    int i;
 
-    i = 0;
-    if (!s || s[0] == '\0')
-        return (0);
-    if (s[i] == '+')
-        i++;
-    if (!s[i])
-        return (0);
-    while (s[i])
-    {
-        if (!ft_isdigit(s[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+int	ft_isnumber(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s || s[0] == '\0')
+		return (0);
+	if (s[i] == '+')
+		i++;
+	if (!s[i])
+		return (0);
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 long long	ft_atol(char *nptr)
@@ -52,25 +65,24 @@ long long	ft_atol(char *nptr)
 	return (number);
 }
 
-int get_args(long long *args, char **argv)
+int	get_args(long long *args, char **argv)
 {
-    int i;
+	int	i;
 
-    i = 1;
-    while (argv[i])
-    {
-        if (!ft_isnumber(argv[i]))
-            return (FAILURE);
-        i++;
-    }
-    i = 0;
-    while (argv[i + 1])
-    {
-        args[i] = ft_atol(argv[i + 1]);        
-        if (args[i] <= 0 || args[i] > INT_MAX)
-            return (FAILURE);  
-        i++;
-    }
-    return (OK);
+	i = 1;
+	while (argv[i])
+	{
+		if (!ft_isnumber(argv[i]))
+			return (FAILURE);
+		i++;
+	}
+	i = 0;
+	while (argv[i + 1])
+	{
+		args[i] = ft_atol(argv[i + 1]);
+		if (args[i] <= 0 || args[i] > INT_MAX)
+			return (FAILURE);
+		i++;
+	}
+	return (OK);
 }
-

@@ -13,12 +13,12 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <limits.h>
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
@@ -54,7 +54,7 @@ typedef enum r_code
 {
 	OK,
 	FAILURE
-} t_code ;
+}						t_code;
 
 typedef enum p_info
 {
@@ -63,8 +63,7 @@ typedef enum p_info
 	TIME_TO_EAT,
 	TIME_TO_SLEEP,
 	MEAL_LIMIT
-} t_info;
-
+}						t_info;
 
 // Time helpers
 long long				get_time_ms(void);
@@ -74,12 +73,10 @@ int						smart_sleep(long duration, t_table *table);
 void					print_action(t_philo *philo, char *state);
 void					ft_putstr_fd(char *s, int fd);
 
-
 // Arguments helpers
 int						get_args(long long *args, char **argv);
 int						ft_isnumber(char *s);
 long long				ft_atol(char *nptr);
-
 
 // Initialization functions
 int						init_forks(t_table *table);
@@ -91,7 +88,7 @@ int						init_simulation(t_table *table);
 // Simulation
 int						simulation(int argc, long long *args);
 int						check_simulation_end(t_table *table);
-void 					stop_simulation(t_table *table);
+void					stop_simulation(t_table *table);
 void					monitor(t_table *table);
 void					*routine(void *p);
 int						eating(t_philo *philo);
