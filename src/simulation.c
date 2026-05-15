@@ -23,9 +23,10 @@ static void	thread_fail_cleanup(t_table *table, int threads)
 {
 	stop_simulation(table);
 	destroy_threads(table, threads);
+	destroy_locks(table, table->total);
 }
 
-int	init_simulation(t_table *table)
+static int	init_simulation(t_table *table)
 {
 	int	i;
 
@@ -68,6 +69,7 @@ int	simulation(int argc, long long *args)
 	}
 	if (init_simulation(table) != OK)
 	{
+		destroy_forks(table, table->total); 
 		free(table->forks);
 		free(table);
 		return (FAILURE);
