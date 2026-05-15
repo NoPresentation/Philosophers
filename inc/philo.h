@@ -83,7 +83,6 @@ int						init_forks(t_table *table);
 void					init_philo(t_table *table, int i);
 int						init_locks(t_table *table);
 t_table					*init_table(int argc, long long *args);
-int						init_simulation(t_table *table);
 
 // Simulation
 int						simulation(int argc, long long *args);

@@ -19,15 +19,17 @@ SRC = 	./src/utils/print_utils.c \
 
 OBJ = $(SRC:.c=.o)
 
+HEADER = inc/philo.h
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	@echo "Compiling source code..."
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "Ready."
 	@echo "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 	
-%.o: %.c
+%.o: %.c $(HEADER)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
@@ -35,7 +37,7 @@ clean:
 	@echo "Removed object files"
 
 fclean: clean
-	@rm -f philo
+	@rm -f $(NAME)
 	@echo "Removed executable"
 
 re: fclean all
