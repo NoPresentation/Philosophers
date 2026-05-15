@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:06:02 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/14 22:19:08 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/03/24 20:37:23 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,15 @@ long long	get_time_ms(void)
 	return (time);
 }
 
-
-/*
-	Why make a separate function fo
-*/
-int	ft_usleep(long duration, t_table *table)
+void	ft_usleep(long duration, t_table *table)
 {
 	long	start;
 
 	start = get_time_ms();
 	while (!end_simulation(table))
 	{
-		if (end_simulation(table))
-			return (FAILURE);
 		if (get_time_ms() - start >= duration)
 			break ;
 		usleep(300);
 	}
-	return (SUCCESS);
 }

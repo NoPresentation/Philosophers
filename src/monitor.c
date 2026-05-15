@@ -12,19 +12,29 @@
 
 #include "../inc/philo.h"
 
+static void stop_simulation(t_table *table)
+{
+	pthread_mutex_lock(&table->simulation_lock);
+	table->simulation = 0;
+	pthread_mutex_unlock(&table->simulation_lock);
+}
+
+static void	announce_death(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->print_lock);
+	printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
+		"died");
+	pthread_mutex_unlock(&philo->table->print_lock);
+}
+
 static int	check_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meals_lock);
-	if ((get_time_ms() - philo->last_meal) > philo->table->to_die)
+	if (get_time_ms() - philo->last_meal > philo->table->to_die)
 	{
-		pthread_mutex_lock(&philo->table->simulation_lock);
-		philo->table->simulation = 0;
-		pthread_mutex_unlock(&philo->table->simulation_lock);
+		stop_simulation(philo->table);
 		pthread_mutex_unlock(&philo->meals_lock);
-		pthread_mutex_lock(&philo->table->print_lock);
-		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
-			"died");
-		pthread_mutex_unlock(&philo->table->print_lock);
+		announce_death(philo);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->meals_lock);
@@ -67,5 +77,6 @@ void	monitor(t_table *table)
 			pthread_mutex_unlock(&table->simulation_lock);
 			return ;
 		}
+		usleep(1000);
 	}
 }
