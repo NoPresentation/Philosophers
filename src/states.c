@@ -6,13 +6,13 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 04:00:57 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 04:40:07 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	release_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
+static void	release_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
 {
 	pthread_mutex_unlock(second_fork);
 	pthread_mutex_unlock(first_fork);
@@ -21,82 +21,88 @@ void	release_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
 static int	grab_forks(t_philo *philo, pthread_mutex_t *first_fork, pthread_mutex_t *second_fork)
 {
 	pthread_mutex_lock(first_fork);
-	if (end_simulation(philo->table))
+	if (check_simulation_end(philo->table))
 	{
 		pthread_mutex_unlock(first_fork);
-		return (1);
+		return (FAILURE);
 	}
 	print_action(philo, "has taken a fork");
 	pthread_mutex_lock(second_fork);
-	if (end_simulation(philo->table))
+	if (check_simulation_end(philo->table))
 	{
 		release_forks(first_fork, second_fork);
-		return (1);
+		return (FAILURE);
 	}
 	print_action(philo, "has taken a fork");
-	return (0);
+	return (OK);
 }
 
 static int update_meals(t_philo *philo)
 {
-	if (end_simulation(philo->table))
-		return (1);
+	if (check_simulation_end(philo->table))
+		return (FAILURE);
 	pthread_mutex_lock(&philo->meals_lock);
 	print_action(philo, "is eating");
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->meals_lock);
-	if (end_simulation(philo->table))
-		return (1);
-	if (end_simulation(philo->table))
-		return (1);
+	if (check_simulation_end(philo->table))
+		return (FAILURE);
 	ft_usleep(philo->table->to_eat, philo->table);
+	if (check_simulation_end(philo->table))
+		return (FAILURE);
 	pthread_mutex_lock(&philo->meals_lock);
 	philo->meals++;
 	pthread_mutex_unlock(&philo->meals_lock);
-	return (0);
+	return (OK);
 }
 
-static void	eat(t_philo *philo, pthread_mutex_t *first, pthread_mutex_t *second)
+static void	set_forks(t_philo *philo, pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
 {
-	if (grab_forks(philo, first, second))
-		return ;
-	if (update_meals(philo))
-	{
-		release_forks(first, second);
-		return ;
-	}
-	release_forks(first, second);
-}
-
-void	eating(t_philo *philo)
-{
-	pthread_mutex_t *first_fork;
-	pthread_mutex_t *second_fork;
-	
 	if (philo->id % 2 == 0)
 	{
-		first_fork = philo->right_fork;
-		second_fork = philo->left_fork;
+		*first_fork = philo->right_fork;
+		*second_fork = philo->left_fork;
 	}
 	else
 	{
-		first_fork = philo->left_fork;
-		second_fork = philo->right_fork;
+		*first_fork = philo->left_fork;
+		*second_fork = philo->right_fork;
 	}
-	eat(philo, first_fork, second_fork);
 }
 
-void	sleeping(t_philo *philo)
+int	eating(t_philo *philo)
 {
-	if (end_simulation(philo->table))
-		return ;
+	pthread_mutex_t *first_fork;
+	pthread_mutex_t *second_fork;
+
+	set_forks(philo, first_fork, second_fork);
+	if (check_simulation_end(philo->table))
+		return (FAILURE);
+	if (grab_forks(philo, first_fork, second_fork) == FAILURE)
+		return (FAILURE);
+	if (update_meals(philo) == FAILURE)
+	{
+		release_forks(first_fork, second_fork);
+		return (FAILURE);
+	}
+	release_forks(first_fork, second_fork);
+	return (OK);
+}
+
+int	sleeping(t_philo *philo)
+{
+	if (check_simulation_end(philo->table))
+		return (FAILURE);
 	print_action(philo, "is sleeping");
 	ft_usleep(philo->table->to_sleep, philo->table);
+	return (OK);
 }
 
-void thinking(t_philo *philo)
+int thinking(t_philo *philo)
 {
-    if (end_simulation(philo->table))
-		return ;
+    if (check_simulation_end(philo->table))
+		return (FAILURE);
+	print_action(philo, "is thinking");
 	usleep(500);
+	return (OK);
 }

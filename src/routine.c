@@ -6,13 +6,13 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:21 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 03:10:55 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 04:40:50 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	end_simulation(t_table *table)
+int	check_simulation_end(t_table *table)
 {
 	pthread_mutex_lock(&table->simulation_lock);
 	if (!table->simulation)
@@ -30,9 +30,9 @@ int	single_philo(t_philo *philo)
 	{
 		print_action(philo, "has taken a fork");
 		ft_usleep(philo->table->to_die, philo->table);
-		return (1);
+		return (FAILURE);
 	}
-	return (0);
+	return (OK);
 }
 
 void	*routine(void *p)
@@ -40,25 +40,24 @@ void	*routine(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	if (single_philo(philo) != 0)
+	if (single_philo(philo) != OK)
 		return (NULL);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	pthread_mutex_lock(&philo->meals_lock);
-	philo->born_time = get_time_ms();
-	philo->last_meal = get_time_ms();
-	pthread_mutex_unlock(&philo->meals_lock);
 	while (1)
 	{
-		if (end_simulation(philo->table))
+		if (check_simulation_end(philo->table))
 			return (NULL);
-		eating(philo);
-		if (end_simulation(philo->table))
+		if (eating(philo))
 			return (NULL);
-		sleeping(philo);
-		if (end_simulation(philo->table))
+		if (check_simulation_end(philo->table))
 			return (NULL);
-		thinking(philo);
+		if (sleeping(philo))
+			return (NULL);
+		if (check_simulation_end(philo->table))
+			return (NULL);
+		if (thinking(philo))
+			return (NULL);
 	}
 	return (NULL);
 }
