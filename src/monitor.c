@@ -30,7 +30,7 @@ static void	announce_death(t_philo *philo)
 static int	check_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meals_lock);
-	if (get_time_ms() - philo->last_meal >= philo->table->to_die)
+	if (get_time_ms() - philo->last_meal > philo->table->to_die)
 	{
 		stop_simulation(philo->table);
 		pthread_mutex_unlock(&philo->meals_lock);

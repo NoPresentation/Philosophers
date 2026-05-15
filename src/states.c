@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 06:15:36 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 06:30:34 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int thinking(t_philo *philo)
     if (check_simulation_end(philo->table))
 		return (FAILURE);
 	print_action(philo, "is thinking");
-	usleep(300);
+	usleep(500);
 	return (OK);
 }
