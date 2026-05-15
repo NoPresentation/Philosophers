@@ -74,7 +74,7 @@ void					print_action(t_philo *philo, char *state);
 void					ft_putstr_fd(char *s, int fd);
 
 // Arguments helpers
-int						get_args(long long *args, char **argv);
+int						get_args(int argc, long long *args, char **argv);
 int						ft_isnumber(char *s);
 long long				ft_atol(char *nptr);
 

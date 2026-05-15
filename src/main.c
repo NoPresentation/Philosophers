@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	long long	args[5];
 
-	if ((argc != 6 && argc != 5) || get_args(args, argv) == FAILURE)
+	if ((argc != 6 && argc != 5) || get_args(argc, args, argv) == FAILURE)
 	{
 		ft_putstr_fd("Invalid arguments.\n", 2);
 		return (FAILURE);
