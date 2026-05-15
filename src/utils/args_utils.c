@@ -65,7 +65,7 @@ long long	ft_atol(char *nptr)
 	return (number);
 }
 
-int	get_args(long long *args, char **argv)
+int	get_args(int argc, long long *args, char **argv)
 {
 	int	i;
 
@@ -77,12 +77,14 @@ int	get_args(long long *args, char **argv)
 		i++;
 	}
 	i = 0;
-	while (argv[i + 1])
+	while (i + 1 < argc)
 	{
 		args[i] = ft_atol(argv[i + 1]);
 		if (args[i] <= 0 || args[i] > INT_MAX)
 			return (FAILURE);
 		i++;
 	}
+	if (argc == 5)
+		args[4] = -1;
 	return (OK);
 }

@@ -17,6 +17,7 @@ int	sleeping(t_philo *philo)
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	print_action(philo, "is sleeping");
-	smart_sleep(philo->table->to_sleep, philo->table);
+	if (smart_sleep(philo->table->to_sleep, philo->table) == FAILURE) 
+		return (FAILURE);
 	return (OK);
 }
