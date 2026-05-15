@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 04:40:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 06:15:36 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static int update_meals(t_philo *philo)
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	pthread_mutex_lock(&philo->meals_lock);
-	print_action(philo, "is eating");
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->meals_lock);
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
-	ft_usleep(philo->table->to_eat, philo->table);
+	print_action(philo, "is eating");
+	if (ft_usleep(philo->table->to_eat, philo->table) == FAILURE)
+		return (FAILURE);
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	pthread_mutex_lock(&philo->meals_lock);
@@ -75,7 +76,7 @@ int	eating(t_philo *philo)
 	pthread_mutex_t *first_fork;
 	pthread_mutex_t *second_fork;
 
-	set_forks(philo, first_fork, second_fork);
+	set_forks(philo, &first_fork, &second_fork);
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	if (grab_forks(philo, first_fork, second_fork) == FAILURE)
@@ -103,6 +104,6 @@ int thinking(t_philo *philo)
     if (check_simulation_end(philo->table))
 		return (FAILURE);
 	print_action(philo, "is thinking");
-	usleep(500);
+	usleep(300);
 	return (OK);
 }

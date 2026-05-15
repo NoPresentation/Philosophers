@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 04:40:21 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 05:44:55 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,48 @@ typedef enum r_code
 	FAILURE
 } t_code ;
 
+typedef enum p_info
+{
+	TOTAL,
+	TIME_TO_DIE,
+	TIME_TO_EAT,
+	TIME_TO_SLEEP,
+	MEAL_LIMIT
+} t_info;
+
+
+// Time helpers
+long long				get_time_ms(void);
+int						ft_usleep(long duration, t_table *table);
+
+// Printing helpers
+void					print_action(t_philo *philo, char *state);
 void					ft_putstr_fd(char *s, int fd);
+
+
+// Arguments helpers
+int						get_args(long long *args, char **argv);
 int						ft_isnumber(char *s);
 long long				ft_atol(const char *nptr);
-long long				get_time_ms(void);
-void					ft_usleep(long duration, t_table *table);
-int						check_simulation_endon_end(t_table *table);
-void					print_action(t_philo *philo, char *state);
 
-// initialization functions
+
+// Initialization functions
 int						init_forks(t_table *table);
 void					init_philo(t_table *table, int i);
 int						init_locks(t_table *table);
 t_table					*init_table(int argc, long long *args);
 int						init_simulation(t_table *table);
 
-// simulation
+// Simulation
+int						simulation(int argc, long long *args);
+int						check_simulation_end(t_table *table);
 void					monitor(t_table *table);
 void					*routine(void *p);
 int						eating(t_philo *philo);
 int						sleeping(t_philo *philo);
 int						thinking(t_philo *philo);
-int						simulation(int argc, long long *args);
 
-// clean up functions
+// Clean up functions
 void					destroy_forks(t_table *table, int forks);
 void					destroy_threads(t_table *table, int threads);
 void					destroy_locks(t_table *table, int philos);

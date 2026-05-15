@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:16:54 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 03:24:25 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 05:12:23 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	ft_putstr_fd(char *s, int fd)
 
 void	print_action(t_philo *philo, char *state)
 {
-	if (end_simulation(philo->table))
+	if (check_simulation_end(philo->table))
 		return ;
 	pthread_mutex_lock(&philo->table->print_lock);
-	if (end_simulation(philo->table))
+	if (check_simulation_end(philo->table))
 	{
 		pthread_mutex_unlock(&philo->table->print_lock);
 		return ;

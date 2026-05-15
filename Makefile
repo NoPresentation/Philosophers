@@ -4,11 +4,11 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -pthread 
 
-SRC = 	./src/utils/ft_putstr_fd.c \
-		./src/utils/num_utils.c \
+SRC = 	./src/utils/print_utils.c \
 		./src/utils/time_utils.c \
+		./src/utils/args_utils.c \
 		./src/main.c \
-		./src/init.c \
+		./src/init_structs.c \
 		./src/routine.c \
 		./src/destroy.c \
 		./src/simulation.c \

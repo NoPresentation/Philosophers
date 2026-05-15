@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:21 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 04:40:50 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 06:07:06 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*routine(void *p)
 	if (single_philo(philo) != OK)
 		return (NULL);
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(500);
 	while (1)
 	{
 		if (check_simulation_end(philo->table))

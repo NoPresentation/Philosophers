@@ -30,7 +30,7 @@ static void	announce_death(t_philo *philo)
 static int	check_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meals_lock);
-	if (get_time_ms() - philo->last_meal > philo->table->to_die)
+	if (get_time_ms() - philo->last_meal >= philo->table->to_die)
 	{
 		stop_simulation(philo->table);
 		pthread_mutex_unlock(&philo->meals_lock);
@@ -58,7 +58,7 @@ void	monitor(t_table *table)
 	int	i;
 	int	full_philos;
 
-	while (1)
+	while (!check_simulation_end(table))
 	{
 		i = 0;
 		full_philos = 0;
@@ -72,11 +72,9 @@ void	monitor(t_table *table)
 		}
 		if (table->must_eat != -1 && full_philos >= table->total)
 		{
-			pthread_mutex_lock(&table->simulation_lock);
-			table->simulation = 0;
-			pthread_mutex_unlock(&table->simulation_lock);
+			stop_simulation(table);
 			return ;
 		}
-		usleep(1000);
+		usleep(500);
 	}
 }
