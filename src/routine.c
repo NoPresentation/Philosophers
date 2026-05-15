@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:21 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 06:07:06 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:47:00 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	single_philo(t_philo *philo)
 	if (philo->table->total == 1)
 	{
 		print_action(philo, "has taken a fork");
-		ft_usleep(philo->table->to_die, philo->table);
+		smart_sleep(philo->table->to_die, philo->table);
 		return (FAILURE);
 	}
 	return (OK);

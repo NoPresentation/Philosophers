@@ -6,15 +6,19 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 05:44:55 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:16:34 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHILO_H
+# define PHILO_H
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <limits.h>
 
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
@@ -40,7 +44,6 @@ typedef struct s_philo
 	int					meals;
 	pthread_mutex_t		meals_lock;
 	long long			last_meal;
-	long long			born_time;
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
@@ -65,7 +68,7 @@ typedef enum p_info
 
 // Time helpers
 long long				get_time_ms(void);
-int						ft_usleep(long duration, t_table *table);
+int						smart_sleep(long duration, t_table *table);
 
 // Printing helpers
 void					print_action(t_philo *philo, char *state);
@@ -75,7 +78,7 @@ void					ft_putstr_fd(char *s, int fd);
 // Arguments helpers
 int						get_args(long long *args, char **argv);
 int						ft_isnumber(char *s);
-long long				ft_atol(const char *nptr);
+long long				ft_atol(char *nptr);
 
 
 // Initialization functions
@@ -88,6 +91,7 @@ int						init_simulation(t_table *table);
 // Simulation
 int						simulation(int argc, long long *args);
 int						check_simulation_end(t_table *table);
+void 					stop_simulation(t_table *table);
 void					monitor(t_table *table);
 void					*routine(void *p);
 int						eating(t_philo *philo);
@@ -99,3 +103,5 @@ void					destroy_forks(t_table *table, int forks);
 void					destroy_threads(t_table *table, int threads);
 void					destroy_locks(t_table *table, int philos);
 void					clean_up(t_table *table);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:33 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 05:20:56 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 14:27:42 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	init_philo(t_table *table, int i)
 	table->philo[i].id = i + 1;
 	table->philo[i].right_fork = &table->forks[(i + 1) % table->total];
 	table->philo[i].left_fork = &table->forks[i];
-	table->philo[i].last_meal = get_time_ms();
-	table->philo[i].born_time = get_time_ms();
+	table->philo[i].last_meal = table->start_time;
 	table->philo[i].meals = 0;
 }
 
@@ -87,7 +86,7 @@ int	init_locks(t_table *table)
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&table->simulation_lock);
-		return (OK);
+		return (FAILURE);
 	}
 	if (init_philo_locks(table) != 0)
 		return (FAILURE);

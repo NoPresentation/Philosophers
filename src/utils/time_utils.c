@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:06:02 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 05:44:12 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:00:38 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ long long	get_time_ms(void)
 	return (time);
 }
 
-int	ft_usleep(long duration, t_table *table)
+int	smart_sleep(long duration, t_table *table)
 {
-	long	start;
+	long long	start;
 
 	start = get_time_ms();
 	while (1)

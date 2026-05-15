@@ -12,17 +12,10 @@
 
 #include "../inc/philo.h"
 
-static void stop_simulation(t_table *table)
-{
-	pthread_mutex_lock(&table->simulation_lock);
-	table->simulation = 0;
-	pthread_mutex_unlock(&table->simulation_lock);
-}
-
 static void	announce_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->print_lock);
-	printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
+	printf("%lld\t%d %s\n", get_time_ms() - philo->table->start_time, philo->id,
 		"died");
 	pthread_mutex_unlock(&philo->table->print_lock);
 }

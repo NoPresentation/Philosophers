@@ -1,28 +1,32 @@
 # include "../../inc/philo.h"
 
-int	get_args(long long *args, char **argv)
+static int	ft_isdigit(int c)
 {
-	int	i;
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+int ft_isnumber(char *s)
+{
+    int i;
 
-	i = 1;
-	while (argv[i])
-	{
-		if (!ft_isnumber(argv[i]))
-			return (FAILURE);
-		i++;
-	}
-	i = 0;
-	while (argv[i + 1])
-	{
-		args[i] = ft_atol(argv[i + 1]);
-		if (args[i] <= 0)
-			return (FAILURE);
-		i++;
-	}
-	return (OK);
+    i = 0;
+    if (!s || s[0] == '\0')
+        return (0);
+    if (s[i] == '+')
+        i++;
+    if (!s[i])
+        return (0);
+    while (s[i])
+    {
+        if (!ft_isdigit(s[i]))
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-long long	ft_atol(const char *nptr)
+long long	ft_atol(char *nptr)
 {
 	int			i;
 	int			sign;
@@ -48,25 +52,25 @@ long long	ft_atol(const char *nptr)
 	return (number);
 }
 
-static int	ft_isdigit(int c)
+int get_args(long long *args, char **argv)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+    int i;
+
+    i = 1;
+    while (argv[i])
+    {
+        if (!ft_isnumber(argv[i]))
+            return (FAILURE);
+        i++;
+    }
+    i = 0;
+    while (argv[i + 1])
+    {
+        args[i] = ft_atol(argv[i + 1]);        
+        if (args[i] <= 0 || args[i] > INT_MAX)
+            return (FAILURE);  
+        i++;
+    }
+    return (OK);
 }
 
-int	ft_isnumber(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}

@@ -6,7 +6,7 @@
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:19:37 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 06:30:34 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:47:00 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int update_meals(t_philo *philo)
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	print_action(philo, "is eating");
-	if (ft_usleep(philo->table->to_eat, philo->table) == FAILURE)
+	if (smart_sleep(philo->table->to_eat, philo->table) == FAILURE)
 		return (FAILURE);
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
@@ -95,7 +95,7 @@ int	sleeping(t_philo *philo)
 	if (check_simulation_end(philo->table))
 		return (FAILURE);
 	print_action(philo, "is sleeping");
-	ft_usleep(philo->table->to_sleep, philo->table);
+	smart_sleep(philo->table->to_sleep, philo->table);
 	return (OK);
 }
 
