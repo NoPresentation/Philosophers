@@ -69,7 +69,7 @@ int	simulation(int argc, long long *args)
 	}
 	if (init_simulation(table) != OK)
 	{
-		destroy_forks(table, table->total); 
+		destroy_forks(table, table->total);
 		free(table->forks);
 		free(table);
 		return (FAILURE);
