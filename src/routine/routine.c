@@ -50,9 +50,9 @@ void	*routine(void *p)
 	{
 		if (check_simulation_end(philo->table))
 			return (NULL);
-		if (eating(philo) == FAILURE || sleeping(philo) == FAILURE ||
-			thinking(philo) == FAILURE)
-				return (NULL);
+		if (eating(philo) == FAILURE || sleeping(philo) == FAILURE
+			|| thinking(philo) == FAILURE)
+			return (NULL);
 	}
 	return (NULL);
 }
