@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   thinking.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/24 19:05:35 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
+/*   Created: 2026/05/15 15:31:16 by anashwan          #+#    #+#             */
+/*   Updated: 2026/05/16 15:54:20 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	thinking(t_philo *philo)
 {
-	long long	args[5];
-
-	if ((argc != 6 && argc != 5) || get_args(argc, args, argv) == FAILURE)
-	{
-		ft_putstr_fd("Invalid arguments.\n", 2);
+	if (check_simulation_end(philo->table))
 		return (FAILURE);
-	}
-	if (simulation(argc, args) != 0)
-	{
-		ft_putstr_fd("Error\n", 2);
-		return (FAILURE);
-	}
+	print_action(philo, "is thinking");
+	usleep(1000);
 	return (OK);
 }

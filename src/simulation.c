@@ -3,27 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:40 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 20:37:42 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
-int	init_simulation(t_table *table)
+void	stop_simulation(t_table *table)
+{
+	pthread_mutex_lock(&table->simulation_lock);
+	table->simulation = 0;
+	pthread_mutex_unlock(&table->simulation_lock);
+}
+
+static void	thread_fail_cleanup(t_table *table, int threads)
+{
+	stop_simulation(table);
+	destroy_threads(table, threads);
+	destroy_locks(table, table->total);
+}
+
+static int	init_simulation(t_table *table)
 {
 	int	i;
 
 	i = 0;
 	table->philo = malloc(sizeof(t_philo) * table->total);
 	if (!table->philo)
-		return (1);
+		return (FAILURE);
 	if (init_locks(table) != 0)
 	{
 		free(table->philo);
-		return (1);
+		return (FAILURE);
 	}
 	table->start_time = get_time_ms();
 	while (i < table->total)
@@ -32,13 +46,13 @@ int	init_simulation(t_table *table)
 		if (pthread_create(&table->philo[i].thread, NULL, routine,
 				&table->philo[i]) != 0)
 		{
-			destroy_threads(table, i);
+			thread_fail_cleanup(table, i);
 			free(table->philo);
-			return (1);
+			return (FAILURE);
 		}
 		i++;
 	}
-	return (0);
+	return (OK);
 }
 
 int	simulation(int argc, long long *args)
@@ -47,19 +61,20 @@ int	simulation(int argc, long long *args)
 
 	table = init_table(argc, args);
 	if (!table)
-		return (1);
-	if (init_forks(table) != 0)
+		return (FAILURE);
+	if (init_forks(table) != OK)
 	{
 		free(table);
-		return (1);
+		return (FAILURE);
 	}
-	if (init_simulation(table) != 0)
+	if (init_simulation(table) != OK)
 	{
+		destroy_forks(table, table->total);
 		free(table->forks);
 		free(table);
-		return (1);
+		return (FAILURE);
 	}
 	monitor(table);
 	clean_up(table);
-	return (0);
+	return (OK);
 }

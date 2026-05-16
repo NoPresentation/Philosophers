@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/06 17:24:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 15:16:34 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <unistd.h>
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
@@ -40,38 +44,60 @@ typedef struct s_philo
 	int					meals;
 	pthread_mutex_t		meals_lock;
 	long long			last_meal;
-	long long			born_time;
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	t_table				*table;
 }						t_philo;
 
-void					ft_putstr_fd(char *s, int fd);
-int						ft_isnumber(char *s);
-long long				ft_atol(const char *nptr);
-long long				get_time_ms(void);
-void					ft_usleep(long duration, t_table *table);
-int						end_simulation(t_table *table);
-void					print_action(t_philo *philo, char *state);
+typedef enum r_code
+{
+	OK,
+	FAILURE
+}						t_code;
 
-// initialization functions
+typedef enum p_info
+{
+	TOTAL,
+	TIME_TO_DIE,
+	TIME_TO_EAT,
+	TIME_TO_SLEEP,
+	MEAL_LIMIT
+}						t_info;
+
+// Time helpers
+long long				get_time_ms(void);
+int						smart_sleep(long duration, t_table *table);
+
+// Printing helpers
+void					print_action(t_philo *philo, char *state);
+void					ft_putstr_fd(char *s, int fd);
+
+// Arguments helpers
+int						get_args(int argc, long long *args, char **argv);
+int						ft_isnumber(char *s);
+long long				ft_atol(char *nptr);
+
+// Initialization functions
 int						init_forks(t_table *table);
 void					init_philo(t_table *table, int i);
 int						init_locks(t_table *table);
 t_table					*init_table(int argc, long long *args);
-int						init_simulation(t_table *table);
 
-// simulation
+// Simulation
+int						simulation(int argc, long long *args);
+int						check_simulation_end(t_table *table);
+void					stop_simulation(t_table *table);
 void					monitor(t_table *table);
 void					*routine(void *p);
-void					eating(t_philo *philo);
-void					sleeping(t_philo *philo);
-void					thinking(t_philo *philo);
-int						simulation(int argc, long long *args);
+int						eating(t_philo *philo);
+int						sleeping(t_philo *philo);
+int						thinking(t_philo *philo);
 
-// clean up functions
+// Clean up functions
 void					destroy_forks(t_table *table, int forks);
 void					destroy_threads(t_table *table, int threads);
 void					destroy_locks(t_table *table, int philos);
 void					clean_up(t_table *table);
+
+#endif

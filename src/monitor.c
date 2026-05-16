@@ -1,30 +1,33 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   monitor.c                                          :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2026/03/24 19:05:28 by anashwan          #+#    #+#             */
-	/*   Updated: 2026/04/14 03:38:06 by anashwan         ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/24 19:05:28 by anashwan          #+#    #+#             */
+/*   Updated: 2026/05/16 16:03:38 by anashwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
+
+static void	announce_death(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->print_lock);
+	printf("%lld\t%d %s\n", get_time_ms() - philo->table->start_time, philo->id,
+		"died");
+	pthread_mutex_unlock(&philo->table->print_lock);
+}
 
 static int	check_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meals_lock);
 	if (get_time_ms() - philo->last_meal > philo->table->to_die)
 	{
-		pthread_mutex_lock(&philo->table->simulation_lock);
-		philo->table->simulation = 0;
-		pthread_mutex_unlock(&philo->table->simulation_lock);
+		stop_simulation(philo->table);
 		pthread_mutex_unlock(&philo->meals_lock);
-		pthread_mutex_lock(&philo->table->print_lock);
-		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
-			"died");
-		pthread_mutex_unlock(&philo->table->print_lock);
+		announce_death(philo);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->meals_lock);
@@ -48,7 +51,7 @@ void	monitor(t_table *table)
 	int	i;
 	int	full_philos;
 
-	while (1)
+	while (!check_simulation_end(table))
 	{
 		i = 0;
 		full_philos = 0;
@@ -62,10 +65,9 @@ void	monitor(t_table *table)
 		}
 		if (table->must_eat != -1 && full_philos >= table->total)
 		{
-			pthread_mutex_lock(&table->simulation_lock);
-			table->simulation = 0;
-			pthread_mutex_unlock(&table->simulation_lock);
+			stop_simulation(table);
 			return ;
 		}
+		usleep(500);
 	}
 }

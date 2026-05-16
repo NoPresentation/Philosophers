@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:16:54 by anashwan          #+#    #+#             */
-/*   Updated: 2026/04/14 02:42:25 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 17:19:48 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "philo.h"
 
 static size_t	ft_strlen(const char *s)
 {
@@ -31,9 +31,15 @@ void	ft_putstr_fd(char *s, int fd)
 
 void	print_action(t_philo *philo, char *state)
 {
+	if (check_simulation_end(philo->table))
+		return ;
 	pthread_mutex_lock(&philo->table->print_lock);
-	if (!end_simulation(philo->table))
-		printf("%lld\t%d %s\n", get_time_ms() - philo->born_time, philo->id,
-			state);
+	if (check_simulation_end(philo->table))
+	{
+		pthread_mutex_unlock(&philo->table->print_lock);
+		return ;
+	}
+	printf("%lld\t%d %s\n", get_time_ms() - philo->table->start_time, philo->id,
+		state);
 	pthread_mutex_unlock(&philo->table->print_lock);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:06:02 by anashwan          #+#    #+#             */
-/*   Updated: 2026/03/24 20:37:23 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/15 17:19:54 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "philo.h"
 
 long long	get_time_ms(void)
 {
@@ -22,15 +22,18 @@ long long	get_time_ms(void)
 	return (time);
 }
 
-void	ft_usleep(long duration, t_table *table)
+int	smart_sleep(long duration, t_table *table)
 {
-	long	start;
+	long long	start;
 
 	start = get_time_ms();
-	while (!end_simulation(table))
+	while (1)
 	{
+		if (check_simulation_end(table))
+			return (FAILURE);
 		if (get_time_ms() - start >= duration)
 			break ;
 		usleep(300);
 	}
+	return (OK);
 }
