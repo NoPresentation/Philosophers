@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:30 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:35:38 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	clean_up(t_table *table)
 	destroy_threads(table, table->total);
 	destroy_forks(table, table->total);
 	destroy_locks(table, table->total);
-	free(table->forks);
-	free(table->philo);
-	free(table);
+	if (table->forks)
+		free(table->forks);
+	if (table->philo)
+		free(table->philo);
 }

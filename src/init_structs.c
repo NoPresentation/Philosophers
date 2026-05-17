@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:33 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:36:27 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,8 @@ void	init_philo(t_table *table, int i)
 	table->philo[i].meals = 0;
 }
 
-t_table	*init_table(int argc, long long *args)
+void	init_table(t_table *table, int argc, long long *args)
 {
-	t_table	*table;
-
-	table = malloc(sizeof(t_table));
-	if (!table)
-		return (NULL);
 	table->total = args[TOTAL];
 	table->to_die = args[TIME_TO_DIE];
 	table->to_eat = args[TIME_TO_EAT];
@@ -59,7 +54,6 @@ t_table	*init_table(int argc, long long *args)
 	else
 		table->must_eat = -1;
 	table->simulation = 1;
-	return (table);
 }
 
 static int	init_philo_locks(t_table *table)

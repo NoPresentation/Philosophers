@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:17:18 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:16:34 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:33:33 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ long long				ft_atol(char *nptr);
 int						init_forks(t_table *table);
 void					init_philo(t_table *table, int i);
 int						init_locks(t_table *table);
-t_table					*init_table(int argc, long long *args);
+void					init_table(t_table *table, int argc, long long *args);
 
 // Simulation
 int						simulation(int argc, long long *args);

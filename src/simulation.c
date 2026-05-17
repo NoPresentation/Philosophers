@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anashwan <anashwan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: anashwan <anashwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:05:40 by anashwan          #+#    #+#             */
-/*   Updated: 2026/05/15 15:37:07 by anashwan         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:35:12 by anashwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,25 @@ static int	init_simulation(t_table *table)
 	return (OK);
 }
 
+static int	init_sim_fail(t_table *table)
+{
+	destroy_forks(table, table->total);
+	free(table->forks);
+	return (FAILURE);
+}
+
 int	simulation(int argc, long long *args)
 {
-	t_table	*table;
+	t_table	table;
 
-	table = init_table(argc, args);
-	if (!table)
+	init_table(&table, argc, args);
+	if (init_forks(&table) != OK)
 		return (FAILURE);
-	if (init_forks(table) != OK)
+	if (init_simulation(&table) != OK)
 	{
-		free(table);
-		return (FAILURE);
+		init_sim_fail(&table);
 	}
-	if (init_simulation(table) != OK)
-	{
-		destroy_forks(table, table->total);
-		free(table->forks);
-		free(table);
-		return (FAILURE);
-	}
-	monitor(table);
-	clean_up(table);
+	monitor(&table);
+	clean_up(&table);
 	return (OK);
 }
