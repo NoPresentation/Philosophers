@@ -125,7 +125,7 @@ make
 
 [Threads and why we use them - Video](https://youtu.be/M9HHWFp84f0?list=PL9vTTBa7QaQPdvEuMTqS9McY-ieaweU8M)
 
-[Threads and processes - Article](https://youtu.be/M9HHWFp84f0?list=PL9vTTBa7QaQPdvEuMTqS9McY-ieaweU8M)
+[Threads, Mutexes and Concurrent Programming in C - Article](https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/)
 
 [Data race, Deadlocks, and Resource Starvation - Article](https://medium.com/@qingedaig/race-conditions-vs-deadlocks-vs-resource-starvation-32e26b039cc2)
 ### Dealing with threads and mutexes in C
